@@ -14,6 +14,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Apps.users',
+    'Apps.diagnostico'
 ]
 
 MIDDLEWARE = [
@@ -84,7 +86,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATIC_ROOT = 'staticfiles'
 
 # Cambiando el modelo predeterminado de Django
-# AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'users.User'
 
 # Necesario para el LoginViw y login_required
 # LOGIN_URL ='login'
