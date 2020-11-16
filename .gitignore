@@ -4,3 +4,7 @@ Pipfile.lock
 Pipfile
 
 .env
+
+Apps/users/migrations/
+
+Apps/diagnostico/migrations/
