@@ -3,8 +3,13 @@ from .forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import CreateView, FormView, UpdateView
+from django.contrib.auth.forms import PasswordChangeForm
 from django.views.generic import ListView
+from django.views import View
 from .models import User
+from django.contrib.auth import update_session_auth_hash
+from django.contrib import messages
+
 
 # Create your views here.
 class CustomLogin(LoginView):
@@ -17,7 +22,6 @@ class CustomLogin(LoginView):
         context['title'] = 'Inicia sesión en Diagnosticapp'
         return context
 
-
 class CustomSignUp(SuccessMessageMixin, CreateView):
     template_name = 'signup.html'
     form_class = UserCreationForm
@@ -29,6 +33,34 @@ class CustomSignUp(SuccessMessageMixin, CreateView):
         context['title'] = 'Registrate en Diagnosticapp'
         return context
 
+class CustomLogout(LogoutView):
+    next_page = 'login'
+
+
+class CustomResetPassword(View):
+    form_class = PasswordChangeForm
+    template_name = 'password.html'
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(
+            user=request.user
+        )
+        return render(request, 'change_password.html', {
+            'form': form,
+            'title': 'Cambio de contraseña'
+        })
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            messages.success(request, 'Contraseña cambiada correctamente')
+
+        return render(request, 'change_password.html', {
+            'form': form,
+            'title': 'Cambio de contraseña'
+        })
 
 class Home(ListView):
     template_name = 'home.html'
