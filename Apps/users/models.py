@@ -13,4 +13,4 @@ class User(AbstractUser):
         ordering = ['id']
 
     genero = models.CharField(max_length=1, choices=generos, blank=False, null=True, verbose_name = 'Genero')
-    edad = models.PositiveIntegerField()
+    edad = models.PositiveIntegerField(null=True, blank=False)

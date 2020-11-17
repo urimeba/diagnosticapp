@@ -19,31 +19,19 @@ class AuthenticationForm(AuthenticationForm):
 class UserCreationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username', 'password1', 'password2',
-                  'is_superuser', 'is_staff', 'email']
-        widgets = {
-            'is_superuser': forms.HiddenInput(),
-            'is_staff': forms.HiddenInput(),
-            'email': forms.HiddenInput()
-        }
-        help_texts = {
-            'username': None,
-            'password1': None,
-            'password2': None,
-        }
-
+        fields = ['username', 'password1', 'password2']
+        
     def __init__(self, *args, **kwargs):
         super(UserCreationForm, self).__init__(*args, **kwargs)
-        for fieldname in ['username', 'password1', 'password2', 'is_superuser', 'is_staff']:
-            self.fields[fieldname].help_text = None
         self.fields['username'].widget = forms.TextInput(attrs={'placeholder': 'Elíge un nombre de usuario'})
         self.fields['username'].label = False
+        self.fields['username'].help_text = 'El nombre de usuario debe ser único'
+
         self.fields['password1'].widget = forms.PasswordInput(attrs={'placeholder':'Ingresa tu contraseña'}) 
         self.fields['password1'].label = False
+        self.fields['password1'].help_text = 'Debe tener 8+ caracteres'
+
         self.fields['password2'].widget = forms.PasswordInput(attrs={'placeholder':'Ingresa tu contraseña nuevamente'}) 
         self.fields['password2'].label = False
+        self.fields['password2'].help_text = 'Ingrese la misma contraseña que antes para verificar'
 
-    def save(self, commit=True):
-        if self.instance.email == '':
-            self.instance.email = None
-        return super().save(commit=commit)

@@ -8,3 +8,5 @@ Pipfile
 Apps/users/migrations/
 
 Apps/diagnostico/migrations/
+
+diagnosticapp/__pycache__/

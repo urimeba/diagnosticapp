@@ -24,23 +24,60 @@
                         <p class="font-weight-bold" style="font-size:.9rem;">Registrate</p>
                     </div>
 
+                    <!-- Mensaje de exito -->
+                    {% if messages %}
+                    <div class="alert alert-success text-center">
+                        {% for message in messages %}
+                        <strong>{{message}} </strong>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Formulario -->
                     <form method="POST" class="container p-0 m-0">
                         {% csrf_token %}
+
+                        <!-- Errores de cada campo -->
                         <div class="form-group p-0 m-0">
+                            {% if form.errors %}
+                            <div class="alert alert-danger " style="font-size: 12px;">
+                                <strong>Corrigue los siguientes errores:</strong>
+                                <ul class="list-group-flush">
+                                    {% for field in form %}
+                                    {% if field.errors %}
+                                    <a class="list-group-item list-group-item-danger list-group-item-action text-reset text-decoration-none"
+                                        href="#id_{{field.name}}">{{field.errors|striptags}}</a>
+                                    {% endif %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+
+                            <!-- Errores sin campo asociado -->
                             {{ form.non_field_errors }}
 
+                            <!-- Campos ocultos -->
                             {% for hidden_field in form.hidden_fields %}
                             {{ hidden_field.errors }}
                             {{ hidden_field }}
                             {% endfor %}
 
+                            <!-- Campo de cada formulario -->
                             {% for field in form.visible_fields %}
-                            {{ field.errors }}
                             {{ field|addclass:'form-line p-0 w-100 mt-2 mb-2 input-text-size' }}
+                            <!-- Texto de ayuda de cada formulario -->
+                            <small class="text-muted">
+                                {{ field.help_text }}
+                            </small>
                             {% endfor %}
+
+                            <!-- Link de regreso al Login -->
                             <div class="container m-0 p-0">
                                 <p class="text-left font-weight-light" style="font-size:.8rem;">¿Ya tienes
-                                    cuenta? <a href="{% url 'login' %}" style="font-size:.8rem;">Ingresa</a>
+                                    cuenta? 
+                                    <a href="{% url 'login' %}" style="font-size:.8rem;">
+                                        Ingresa
+                                    </a>
                                 </p>
                             </div>
                             <div class="container p-0 d-flex flex-column align-items-end">

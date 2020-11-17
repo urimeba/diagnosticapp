@@ -2,7 +2,6 @@ import os
 from dotenv import load_dotenv
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = True
 ALLOWED_HOSTS = ['*']
@@ -89,6 +88,6 @@ STATIC_ROOT = 'staticfiles'
 AUTH_USER_MODEL = 'users.User'
 
 # Necesario para el LoginViw y login_required
-# LOGIN_URL ='login'
-# LOGIN_REDIRECT_URL = 'home'
-# LOGOUT_REDIRECT_URL = 'login'
+LOGIN_URL ='login'
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'
