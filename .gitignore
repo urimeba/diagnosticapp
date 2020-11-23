@@ -5,8 +5,6 @@ Pipfile
 
 .env
 
-Apps/users/migrations/
 
-Apps/diagnostico/migrations/
 
 diagnosticapp/__pycache__/
