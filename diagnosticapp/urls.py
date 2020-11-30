@@ -16,10 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from Apps.users import urls as urls_users
+from Apps.diagnostico import urls as urls_diagnostico
 from django.urls import path, include
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     path('', include(urls_users)),
+    path('home', include(urls_diagnostico)),
 ]
